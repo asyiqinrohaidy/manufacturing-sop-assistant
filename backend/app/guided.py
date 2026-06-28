@@ -1,4 +1,5 @@
 import ollama
+import re
 
 # Keywords yang indicate soalan prosedural
 PROCEDURAL_KEYWORDS = [
@@ -22,24 +23,34 @@ def format_as_steps(answer: str) -> list[str]:
         if not line:
             continue
 
-        # Remove common numbering formats: "1.", "1)", "Step 1:", etc.
-        import re
+        # Remove common numbering formats
         cleaned = re.sub(r'^(step\s*)?\d+[\.\):\-]\s*', '', line, flags=re.IGNORECASE)
         cleaned = re.sub(r'^[\-\•\*]\s*', '', cleaned)
 
-        if cleaned:
+        if cleaned and len(cleaned) > 10:
             steps.append(cleaned)
 
     return steps if steps else [answer]
 
-def get_guided_response(question: str, context_chunks: list[str]) -> dict:
+def get_guided_response(question: str, context_docs: list[dict]) -> dict:
     """Generate guided step-by-step response"""
-    context = "\n\n".join(context_chunks)
+
+    # Support both old list[str] and new list[dict] format
+    if context_docs and isinstance(context_docs[0], dict):
+        context_parts = []
+        for doc in context_docs:
+            context_parts.append(
+                f"[Page {doc['page']}, Section: {doc['section']}]\n{doc['text']}"
+            )
+        context = "\n\n".join(context_parts)
+    else:
+        context = "\n\n".join(context_docs)
 
     prompt = f"""You are a manufacturing SOP assistant.
 Based on the SOP document below, provide a clear step-by-step procedure.
 Format your response as numbered steps only. Each step on a new line.
 Start each line with the step number followed by a period.
+Be specific and include exact values, settings, and locations mentioned in the SOP.
 
 Context:
 {context}

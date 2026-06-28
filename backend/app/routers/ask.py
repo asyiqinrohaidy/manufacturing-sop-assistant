@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from app.rag import query_rag, search_chunks
+from app.rag import query_rag, search_chunks, ask_llm
 from app.guided import is_procedural_question, get_guided_response
 
 router = APIRouter()
@@ -19,20 +19,35 @@ async def ask_question(request: QuestionRequest):
 
     # Check if procedural question — use Guided Mode
     if is_procedural_question(question):
-        context_chunks = search_chunks(question)
+        context_docs = search_chunks(question)
 
-        if not context_chunks:
+        if not context_docs:
             return {
                 "type": "error",
                 "answer": "No relevant information found in uploaded documents."
             }
 
-        guided_response = get_guided_response(question, context_chunks)
+        guided_response = get_guided_response(question, context_docs)
+
+        # Add citations to guided response
+        citations = list(set([
+            f"{d['doc_name']} — Page {d['page']}, Section: {d['section']}"
+            for d in context_docs
+        ]))
+        guided_response["citations"] = citations
         return guided_response
 
-    # Regular Q&A
-    answer = query_rag(question)
+    # Regular Q&A with citations
+    context_docs = search_chunks(question)
+    if not context_docs:
+        return {
+            "type": "error",
+            "answer": "No relevant information found in uploaded documents."
+        }
+
+    result = ask_llm(question, context_docs)
     return {
         "type": "regular",
-        "answer": answer
+        "answer": result["answer"],
+        "citations": result["citations"]
     }
