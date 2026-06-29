@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import upload, ask
+from app.routers import fsm_router
 
 app = FastAPI(title="Manufacturing SOP Assistant")
 
@@ -15,6 +16,7 @@ app.add_middleware(
 
 app.include_router(upload.router, prefix="/api")
 app.include_router(ask.router, prefix="/api")
+app.include_router(fsm_router.router, prefix="/api")
 
 @app.get("/")
 def root():
