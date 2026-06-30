@@ -8,13 +8,13 @@ Built to address a real problem in manufacturing environments: operators spendin
 
 ## Features
 
-- **Natural Language Q&A** — Ask any question about uploaded SOP documents and receive accurate, context-grounded answers with exact page and section citations
-- **FSM Guided Mode** — Procedural questions automatically trigger a Finite State Machine that delivers interactive step-by-step checklists with pass/fail branching
-- **Compliance Enforcement** — Operators cannot skip a failed step; certain failure conditions trigger a terminal state requiring maintenance intervention
-- **Hybrid Search** — Combines FAISS semantic search and BM25 keyword search (60/40 weighted) for more accurate retrieval than either method alone
-- **Hierarchical Chunking** — Documents are parsed into section and paragraph-level chunks, preserving document structure for more precise retrieval
-- **Page Citations** — Every answer includes exact source references (document name, page number, section) to support technical auditing
-- **Multi-document Support** — Multiple SOP PDFs can be uploaded and queried simultaneously with cross-document retrieval
+- **Natural Language Q&A** - Ask any question about uploaded SOP documents and receive accurate, context-grounded answers with exact page and section citations
+- **FSM Guided Mode** - Procedural questions automatically trigger a Finite State Machine that delivers interactive step-by-step checklists with pass/fail branching
+- **Compliance Enforcement** - Operators cannot skip a failed step; certain failure conditions trigger a terminal state requiring maintenance intervention
+- **Hybrid Search** - Combines FAISS semantic search and BM25 keyword search (60/40 weighted) for more accurate retrieval than either method alone
+- **Hierarchical Chunking** - Documents are parsed into section and paragraph-level chunks, preserving document structure for more precise retrieval
+- **Page Citations** - Every answer includes exact source references (document name, page number, section) to support technical auditing
+- **Multi-document Support** - Multiple SOP PDFs can be uploaded and queried simultaneously with cross-document retrieval
 
 ---
 
@@ -72,10 +72,10 @@ User asks a factual question → hybrid search retrieves relevant chunks → LLa
 User asks a procedural question (detected via keyword matching) → RAG retrieves relevant SOP sections → LLaMA extracts steps → FSM builds a state graph → operator navigates steps one at a time with pass/fail branching.
 
 **FSM branching logic:**
-- **Pass** — advance to next step
-- **Fail (regular step)** — stay on current step, operator must retry
-- **Fail (conditional step)** — branch to adjustment or loop step as defined in SOP
-- **Fail (terminal step)** — process terminated, operator instructed to contact maintenance
+- **Pass** - advance to next step
+- **Fail (regular step)** - stay on current step, operator must retry
+- **Fail (conditional step)** - branch to adjustment or loop step as defined in SOP
+- **Fail (terminal step)** - process terminated, operator instructed to contact maintenance
 
 ---
 
@@ -179,7 +179,7 @@ Manufacturing environments often have data sensitivity requirements. Running LLa
 SOP documents contain specific technical terms, tool names, and part numbers that semantic search alone may miss. BM25 keyword matching catches exact term matches while FAISS handles conceptual similarity. The 60/40 weighted combination outperforms either method alone on technical documents.
 
 **Why FSM instead of a simple checklist?**
-Real SOPs contain conditional logic — steps that branch based on measurement outcomes or error states. A simple linear checklist cannot enforce compliance for conditional procedures. The FSM models the actual decision tree embedded in the SOP.
+Real SOPs contain conditional logic, steps that branch based on measurement outcomes or error states. A simple linear checklist cannot enforce compliance for conditional procedures. The FSM models the actual decision tree embedded in the SOP.
 
 ---
 
@@ -196,6 +196,6 @@ Real SOPs contain conditional logic — steps that branch based on measurement o
 
 ## Author
 
-Asyiqin Rohaidy
+Asyiqin Rohaidy,
 AI Engineer
 [LinkedIn](https://linkedin.com/in/asyiqinrohaidy) | [GitHub](https://github.com/asyiqinrohaidy)
