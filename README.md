@@ -1,6 +1,6 @@
 # Manufacturing SOP Assistant
 
-A production-ready RAG-powered assistant that enables factory operators to query Standard Operating Procedure (SOP) documents in natural language and receive interactive, step-by-step procedural guidance with compliance enforcement.
+A RAG-powered assistant that enables factory operators to query Standard Operating Procedure (SOP) documents in natural language and receive interactive, step-by-step procedural guidance with compliance enforcement.
 
 Built to address a real problem in manufacturing environments: operators spending significant time searching through lengthy SOP manuals during time-sensitive operations.
 
@@ -109,7 +109,8 @@ npm install
 npm start
 ```
 
-### 4. Docker setup (alternative)
+### 4. Docker setup (configuration provided, not yet verified)
+Dockerfile and docker-compose.yml are included for containerised deployment. This has not yet been tested end-to-end.
 ```bash
 docker-compose up --build
 ```
