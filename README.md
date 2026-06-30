@@ -196,6 +196,6 @@ Real SOPs contain conditional logic — steps that branch based on measurement o
 
 ## Author
 
-Nurul Asyiqin Rohaidy
-AI Engineer | MSc Computer Science, University of Warwick (2026)
+Asyiqin Rohaidy
+AI Engineer
 [LinkedIn](https://linkedin.com/in/asyiqinrohaidy) | [GitHub](https://github.com/asyiqinrohaidy)
